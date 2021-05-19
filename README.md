@@ -53,6 +53,11 @@ If you run the ALT:V server with the module from the api repo and have everythin
 
 - [ ] Finalize Dashboard
 
+## Server
+
+- [x] Basic Server Statistics
+- [ ] Basic Server Config
+
 ## Players
 
 - [ ] Player List (alt:V id, social-id, name, online since, )
