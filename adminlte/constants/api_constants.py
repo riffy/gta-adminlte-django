@@ -1,2 +1,1 @@
 TOKEN = "?t="
-SECRET = "REPLACETHIS"
