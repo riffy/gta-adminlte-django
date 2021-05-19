@@ -1,0 +1,2 @@
+TOKEN = "?t="
+SECRET = "REPLACETHIS"

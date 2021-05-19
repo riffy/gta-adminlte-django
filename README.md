@@ -9,6 +9,7 @@ This project serves as an example for integrating adminlte into django and using
 ## Installation & First Start
 
 1. Run `pip install -r requirements.txt`
+2. Go to https://miniwebtool.com/django-secret-key-generator/ and generate a new django secret key. Copy paste this into the `.env` file and keep it secret
 
 
 # Game Server API
