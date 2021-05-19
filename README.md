@@ -34,7 +34,7 @@ The following steps refer to the example using the Game Server API (see https://
 1. Login and click `Admin` in the top
 2. Click `Add` to the Gameservers
 3. Fill out the form with information from the Alt:V gameserver data. If the Django server and Gameserver are running on the same ip/environment you can use `localhost`
-4. Click `Save` and head back to the main site by clicking `VIEW SITE` in the top right.
+4. Click `Save` and head back to the main site by clicking `VIEW SITE` in the top right. If you encounter an error during adding gameserver like *no such table*, stop server and run `python manage.py migrate --run-syncdb`
 5. The server should now be selectable in the left sidebar
 
 ![django_serverselect](https://user-images.githubusercontent.com/13089522/118778067-05f6f380-b88a-11eb-9a86-cfe614b634ff.jpg)
