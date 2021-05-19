@@ -10,7 +10,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>AdminLTE 3 | Dashboard</title>
+    <title>AdminLTE 3 | Server Statistics</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
@@ -111,7 +111,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                         data-accordion="false">
                         <li class="nav-item">
-                            <a href="/dashboard/{{selectedserver.id}}/" class="nav-link active">
+                            <a href="/dashboard/{{selectedserver.id}}/" class="nav-link">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
                                     Dashboard
@@ -120,7 +120,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         </li>
                         <li class="nav-header">SERVER</li>
                         <li class="nav-item">
-                            <a href="/serverstats/{{selectedserver.id}}/" class="nav-link">
+                            <a href="/serverstats/{{selectedserver.id}}/" class="nav-link active">
                                 <i class="nav-icon fas fa-chart-pie"></i>
                                 <p>
                                     Statistics
@@ -174,12 +174,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             {% if error %}
                             <h1 class="m-0">Error, Please return to home</h1>
                             {% else %}
-                            <h1 class="m-0">Dashboard</h1>
+                            <h1 class="m-0">Statistics & Connections</h1>
                             {% endif %}
                         </div><!-- /.col -->
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item active">Dashboard</li>
+                                <li class="breadcrumb-item active">Server - Statistics</li>
                             </ol>
                         </div><!-- /.col -->
                     </div><!-- /.row -->
@@ -192,20 +192,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 {% if not error %}
                 <!-- Small boxes (Stat box) -->
                 <div class="row">
-                    <div class="col-lg-3 col-6">
-                        <!-- small box -->
-                        <div class="small-box bg-info">
-                            <div class="inner">
-                                <h3>Server Info</h3>
-                                <p>Name: {{selectedserver.name}} <br> Addr:
-                                    {{selectedserver.ip}}:{{selectedserver.gameport}}</p>
-                            </div>
-                            <div class="icon">
-                                <i class="ion ion-information-circled"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- ./col -->
                     {% if not online %}
                     <div class="col-lg-3 col-6">
                         <div class="small-box bg-danger">
@@ -234,35 +220,39 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <!-- ./col -->
                     <div class="col-lg-3 col-6">
                         <!-- small box -->
-                        <div class="small-box bg-warning">
+                        <div class="small-box bg-danger">
                             <div class="inner">
-                                {% if data.onlinePlayers >= 0 %}
-                                <h3>{{data.onlinePlayers}}</h3>
-                                {% else %}
-                                <h3>NaN / Error</h3>
-                                {% endif %}
-                                <p>Online Players</p>
+                                <h3 id="totalVisits">NaN / Error</h3>
+                                <p>Total</p>
                             </div>
                             <div class="icon">
-                                <i class="ion ion-person-add"></i>
+                                <i class="ion ion-pie-graph"></i>
                             </div>
-                            <!-- TODO Add Players list <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a> -->
                         </div>
                     </div>
                     <!-- ./col -->
                     <div class="col-lg-3 col-6">
                         <!-- small box -->
-                        <div class="small-box bg-danger">
+                        <div class="small-box bg-info">
                             <div class="inner">
-                                {% if data.visits >= 0 %}
-                                <h3>{{data.visits}}</h3>
-                                {% else %}
-                                <h3>NaN / Error</h3>
-                                {% endif %}
-                                <p>Total Connections</p>
+                                <h3 id="socialIds">NaN / Error</h3>
+                                <p>Social Id</p>
                             </div>
                             <div class="icon">
-                                <i class="ion ion-pie-graph"></i>
+                                <i class="ion ion-android-contact"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- ./col -->
+                    <div class="col-lg-3 col-6">
+                        <!-- small box -->
+                        <div class="small-box bg-warning">
+                            <div class="inner">
+                                <h3 id="ips">NaN / Error</h3>
+                                <p>IPs</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-ios-world"></i>
                             </div>
                         </div>
                     </div>
@@ -320,8 +310,43 @@ scratch. This page gets rid of all links and provides the needed markup only.
             }
         }
 
+        function parseVisits() {
+            let visits = {{data.visits|safe}}
+            console.log(visits);
+            function uniqueSocials() {
+                let ret = [];
+                for (visit in visits) {
+                    if (!ret.includes(visit.socialId)) ret.push(visit.socialId);
+                }
+                return ret;
+            }
+
+            function uniqueIps() {
+                let ret = [];
+                for (visit in visits) {
+                    if (!ret.includes(visit.ip)) ret.push(visit.ip);
+                }
+                return ret;
+            }
+            if (visits != undefined) {
+                let totalLabel = document.getElementById("totalVisits");
+                if (totalLabel) {
+                    totalLabel.innerHTML = visits.length;
+                }
+                let socialLabel = document.getElementById("socialIds");
+                if (socialLabel) {
+                    socialLabel.innerHTML = uniqueSocials().length;
+                }
+                let ipLabel = document.getElementById("ips");
+                if (ipLabel) {
+                    ipLabel.innerHTML = uniqueIps().length;
+                }
+            }
+        }
+
         window.onload = function () {
             parseUptime();
+            parseVisits();
         }
     </script>
 </body>
