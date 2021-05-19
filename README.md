@@ -46,3 +46,15 @@ For the Gameserver API, please look at my other repository https://github.com/ri
 If you run the ALT:V server with the module from the api repo and have everything configured correctly you should see the online status
 
 ![server_status](https://user-images.githubusercontent.com/13089522/118778377-51110680-b88a-11eb-9573-00fde3e56ac8.jpg)
+
+# Upcoming Features
+
+## Dashboard
+
+- [ ] Finalize Dashboard
+
+## Players
+
+- [ ] Player List (alt:V id, social-id, name, online since, )
+- [ ] Player Actions (kick with reason)
+- [ ] Player Map 
