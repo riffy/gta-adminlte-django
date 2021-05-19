@@ -26,23 +26,19 @@ def dashboard(request, serverid=0):
     args = {
         'error': False,
         'gameservers': gameservers,
-        'info': {}
+        'online': False,
+        'data': {}
     }
     try:
         selectedserver = get_object_or_404(Gameserver, pk=serverid)
         args['selectedserver'] = selectedserver
         try:
             response = requests.get(selectedserver.api_query(api_queries.DASHBOARD))
-            logger.error(response)
-            args['info'] = {
-                'online': True
-            }
+            args['online'] = True
+            args['data'] = response.json()
             return render(request, 'adminlte/dashboard.html', args)
         except requests.RequestException as e:
             logger.error(e)
-            args['info'] = {
-                'online': False
-            }
             return render(request, 'adminlte/dashboard.html', args)
     except ObjectDoesNotExist as e:
         return render(request, 'adminlte/dashboard.html', {'error': True})

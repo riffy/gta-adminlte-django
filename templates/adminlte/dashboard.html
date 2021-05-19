@@ -110,37 +110,53 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                         data-accordion="false">
-                        <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
-                        <li class="nav-item menu-open">
+                        <li class="nav-item">
                             <a href="#" class="nav-link active">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
-                                    Starter Pages
-                                    <i class="right fas fa-angle-left"></i>
+                                    Dashboard
                                 </p>
                             </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link active">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Active Page</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Inactive Page</p>
-                                    </a>
-                                </li>
-                            </ul>
+                        </li>
+                        <li class="nav-header">SERVER</li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-chart-pie"></i>
+                                <p>
+                                    Statistics
+                                </p>
+                            </a>
                         </li>
                         <li class="nav-item">
                             <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-th"></i>
+                                <i class="nav-icon fas fa-wrench"></i>
                                 <p>
-                                    Simple Link
-                                    <span class="right badge badge-danger">New</span>
+                                    Config
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-header">PLAYERS</li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-users"></i>
+                                <p>
+                                    List
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-user-tie"></i>
+                                <p>
+                                    Manage
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-id-card-alt"></i>
+                                <p>
+                                    Statistics
                                 </p>
                             </a>
                         </li>
@@ -195,11 +211,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             <div class="icon">
                                 <i class="ion ion-information-circled"></i>
                             </div>
-                            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
                     <!-- ./col -->
-                    {% if not info.online %}
+                    {% if not online %}
                     <div class="col-lg-3 col-6">
                         <div class="small-box bg-danger">
                             <div class="inner">
@@ -209,22 +224,37 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             <div class="icon">
                                 <i class="ion ion-android-cancel"></i>
                             </div>
-                            <!-- <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a> -->
                         </div>
                     </div>
                     {% else %}
                     <div class="col-lg-3 col-6">
                         <!-- small box -->
-
                         <div class="small-box bg-success">
                             <div class="inner">
                                 <h3>Server Status</h3>
-                                <p>Online</p>
+                                <p id="onlineUptimeLabel">Online</p>
                             </div>
                             <div class="icon">
                                 <i class="ion ion-android-checkbox"></i>
                             </div>
-                            <!-- <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a> -->
+                        </div>
+                    </div>
+                    <!-- ./col -->
+                    <div class="col-lg-3 col-6">
+                        <!-- small box -->
+                        <div class="small-box bg-warning">
+                            <div class="inner">
+                                {% if data.onlinePlayers >= 0 %}
+                                <h3>{{data.onlinePlayers}}</h3>
+                                {% else %}
+                                <h3>NaN / Error</h3>
+                                {% endif %}
+                                <p>Online Players</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-person-add"></i>
+                            </div>
+                            <!-- TODO Add Players list <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a> -->
                         </div>
                     </div>
                     <!-- ./col -->
@@ -232,17 +262,20 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <!-- small box -->
                         <div class="small-box bg-danger">
                             <div class="inner">
-                                <h3>65</h3>
-                                <p>Unique Visitors</p>
+                                {% if data.visits >= 0 %}
+                                <h3>{{data.visits}}</h3>
+                                {% else %}
+                                <h3>NaN / Error</h3>
+                                {% endif %}
+                                <p>Total Connections</p>
                             </div>
                             <div class="icon">
                                 <i class="ion ion-pie-graph"></i>
                             </div>
-                            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
-                    {% endif %}
                     <!-- ./col -->
+                    {% endif %}
                 </div>
                 <!-- /.row -->
                 {% endif %}
@@ -276,12 +309,27 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
     <script>
         function serverSelection() {
-            var x = Number(document.getElementById("serverSelect").value);
+            let x = Number(document.getElementById("serverSelect").value);
             if (x > 0) {
                 window.location.href = "/dashboard/" + x + "/";
             } else {
                 window.location.href = "/";
             }
+        }
+
+        function parseUptime() {
+            let uptime = {{data.uptime}}
+            if (uptime != undefined) {
+                let label = document.getElementById("onlineUptimeLabel");
+                if (label) {
+                    let hms = new Date(uptime * 1000).toISOString().substr(11, 8);
+                    label.innerHTML = "Online<br>Since: " + (hms) + " (hh:mm:ss)";
+                }
+            }
+        }
+
+        window.onload = function () {
+            parseUptime();
         }
     </script>
 </body>
