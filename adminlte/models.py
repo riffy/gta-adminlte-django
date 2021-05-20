@@ -15,5 +15,8 @@ class Gameserver(models.Model):
     def api_string(self):
         return "{}:{}/".format(self.ip, self.apiport)
 
-    def api_query(self, query):
-        return "http://{}{}{}{}".format(self.api_string(), query, api_constants.TOKEN, self.apisecret)
+    def api_query(self, query, params = {}):
+        addr = "http://{}{}{}{}".format(self.api_string(), query, api_constants.TOKEN, self.apisecret)
+        for key in params:
+            addr += "&{}={}".format(key, params[key])
+        return addr
