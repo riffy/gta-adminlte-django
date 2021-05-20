@@ -51,7 +51,7 @@ function createTableData(d) {
 
 function createActionData(playerid) {
     const cell = createElement("td");
-    cell.appendChild(createAction("a", ["text-muted"], [{key: "href", value: "www.google.de"}], "fas", "fa-info-circle"));
+    cell.appendChild(createAction("a", ["text-muted"], [{key: "href", value: "/playerinfo/" + serverid + "/" + playerid + "/"}], "fas", "fa-info-circle"));
     return cell;
 }
 
