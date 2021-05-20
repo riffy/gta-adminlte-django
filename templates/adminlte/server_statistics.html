@@ -137,7 +137,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         </li>
                         <li class="nav-header">PLAYERS</li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="/playerlist/{{selectedserver.id}}/" class="nav-link">
                                 <i class="nav-icon fas fa-users"></i>
                                 <p>
                                     List
@@ -148,7 +148,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-user-tie"></i>
                                 <p>
-                                    Manage
+                                    Info
                                 </p>
                             </a>
                         </li>
@@ -174,7 +174,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             {% if error %}
                             <h1 class="m-0">Error, Please return to home</h1>
                             {% else %}
-                            <h1 class="m-0">Statistics & Connections</h1>
+                            <h1 class="m-0">Server - Statistics</h1>
                             {% endif %}
                         </div><!-- /.col -->
                         <div class="col-sm-6">
