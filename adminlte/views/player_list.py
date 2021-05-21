@@ -25,9 +25,8 @@ def player_list(request, serverid=0):
         selectedserver = get_object_or_404(Gameserver, pk=serverid)
         args['selectedserver'] = selectedserver
         try:
-            response = requests.get(selectedserver.api_query(api_queries.PLAYER_LIST))
+            args['data'] = selectedserver.player_list()
             args['online'] = True
-            args['data'] = response.json()
             return render(request, 'adminlte/player_list.html', args)
         except requests.RequestException as e:
             logger.error(e)

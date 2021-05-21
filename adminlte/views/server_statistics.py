@@ -24,9 +24,8 @@ def server_statistics(request, serverid=0):
         selectedserver = get_object_or_404(Gameserver, pk=serverid)
         args['selectedserver'] = selectedserver
         try:
-            response = requests.get(selectedserver.api_query(api_queries.SERVER_STATISTICS))
+            args['data'] = selectedserver.server_stats()
             args['online'] = True
-            args['data'] = response.json()
             return render(request, 'adminlte/server_statistics.html', args)
         except requests.RequestException as e:
             logger.error(e)

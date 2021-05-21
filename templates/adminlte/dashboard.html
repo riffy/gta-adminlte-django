@@ -192,82 +192,93 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 {% if not error %}
                 <!-- Small boxes (Stat box) -->
                 <div class="row">
-                    <div class="col-lg-3 col-6">
-                        <!-- small box -->
-                        <div class="small-box bg-info">
-                            <div class="inner">
-                                <h3>Server Info</h3>
-                                <p>Name: {{selectedserver.name}} <br> Addr:
-                                    {{selectedserver.ip}}:{{selectedserver.gameport}}</p>
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Basic Server Info</h3>
                             </div>
-                            <div class="icon">
-                                <i class="ion ion-information-circled"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- ./col -->
-                    {% if not online %}
-                    <div class="col-lg-3 col-6">
-                        <div class="small-box bg-danger">
-                            <div class="inner">
-                                <h3>Server Status</h3>
-                                <p>Offline</p>
-                            </div>
-                            <div class="icon">
-                                <i class="ion ion-android-cancel"></i>
-                            </div>
-                        </div>
-                    </div>
-                    {% else %}
-                    <div class="col-lg-3 col-6">
-                        <!-- small box -->
-                        <div class="small-box bg-success">
-                            <div class="inner">
-                                <h3>Server Status</h3>
-                                <p id="onlineUptimeLabel">Online</p>
-                            </div>
-                            <div class="icon">
-                                <i class="ion ion-android-checkbox"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- ./col -->
-                    <div class="col-lg-3 col-6">
-                        <!-- small box -->
-                        <div class="small-box bg-warning">
-                            <div class="inner">
-                                {% if data.onlinePlayers >= 0 %}
-                                <h3>{{data.onlinePlayers}}</h3>
+                            <div class="card-body">
+                                <div class="row">
+                                <div class="col-lg-3 col-6">
+                                    <!-- small box -->
+                                    <div class="small-box bg-info">
+                                        <div class="inner">
+                                            <h3>Server Info</h3>
+                                            <p>Name: {{selectedserver.name}} <br> Addr:
+                                                {{selectedserver.ip}}:{{selectedserver.gameport}}</p>
+                                        </div>
+                                        <div class="icon">
+                                            <i class="ion ion-information-circled"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- ./col -->
+                                {% if not online %}
+                                <div class="col-lg-3 col-6">
+                                    <div class="small-box bg-danger">
+                                        <div class="inner">
+                                            <h3>Server Status</h3>
+                                            <p>Offline</p>
+                                        </div>
+                                        <div class="icon">
+                                            <i class="ion ion-android-cancel"></i>
+                                        </div>
+                                    </div>
+                                </div>
                                 {% else %}
-                                <h3>NaN / Error</h3>
+                                <div class="col-lg-3 col-6">
+                                    <!-- small box -->
+                                    <div class="small-box bg-success">
+                                        <div class="inner">
+                                            <h3>Server Status</h3>
+                                            <p id="onlineUptimeLabel">Online</p>
+                                        </div>
+                                        <div class="icon">
+                                            <i class="ion ion-android-checkbox"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- ./col -->
+                                <div class="col-lg-3 col-6">
+                                    <!-- small box -->
+                                    <div class="small-box bg-warning">
+                                        <div class="inner">
+                                            {% if data.onlinePlayers >= 0 %}
+                                            <h3>{{data.onlinePlayers}}</h3>
+                                            {% else %}
+                                            <h3>NaN / Error</h3>
+                                            {% endif %}
+                                            <p>Online Players</p>
+                                        </div>
+                                        <div class="icon">
+                                            <i class="ion ion-person-add"></i>
+                                        </div>
+                                        <!-- TODO Add Players list <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a> -->
+                                    </div>
+                                </div>
+                                <!-- ./col -->
+                                <div class="col-lg-3 col-6">
+                                    <!-- small box -->
+                                    <div class="small-box bg-danger">
+                                        <div class="inner">
+                                            {% if data.visits >= 0 %}
+                                            <h3>{{data.visits}}</h3>
+                                            {% else %}
+                                            <h3>NaN / Error</h3>
+                                            {% endif %}
+                                            <p>Total Connections</p>
+                                        </div>
+                                        <div class="icon">
+                                            <i class="ion ion-pie-graph"></i>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                                <!-- ./col -->
                                 {% endif %}
-                                <p>Online Players</p>
                             </div>
-                            <div class="icon">
-                                <i class="ion ion-person-add"></i>
-                            </div>
-                            <!-- TODO Add Players list <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a> -->
                         </div>
                     </div>
-                    <!-- ./col -->
-                    <div class="col-lg-3 col-6">
-                        <!-- small box -->
-                        <div class="small-box bg-danger">
-                            <div class="inner">
-                                {% if data.visits >= 0 %}
-                                <h3>{{data.visits}}</h3>
-                                {% else %}
-                                <h3>NaN / Error</h3>
-                                {% endif %}
-                                <p>Total Connections</p>
-                            </div>
-                            <div class="icon">
-                                <i class="ion ion-pie-graph"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- ./col -->
-                    {% endif %}
                 </div>
                 <!-- /.row -->
                 {% endif %}
@@ -298,32 +309,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
     <!-- AdminLTE App -->
     <script src="{% static 'dist/js/adminlte.min.js' %}"></script>
-
     <script>
-        function serverSelection() {
-            let x = Number(document.getElementById("serverSelect").value);
-            if (x > 0) {
-                window.location.href = "/dashboard/" + x + "/";
-            } else {
-                window.location.href = "/";
-            }
-        }
-
-        function parseUptime() {
-            let uptime = {{data.uptime}}
-            if (uptime != undefined) {
-                let label = document.getElementById("onlineUptimeLabel");
-                if (label) {
-                    let hms = new Date(uptime * 1000).toISOString().substr(11, 8);
-                    label.innerHTML = "Online<br>Since: " + (hms) + " (hh:mm:ss)";
-                }
-            }
-        }
-
-        window.onload = function () {
-            // parseUptime();
-        }
+        var data = {{data | safe}}
     </script>
+    <script src="{% static 'dist/js/pages/dashboard.js' %}"></script>
+    <script src="{% static 'dist/js/pages/sidebar.js' %}"></script>
 </body>
 
 </html>

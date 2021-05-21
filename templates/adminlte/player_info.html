@@ -10,7 +10,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>AdminLTE 3 | Server Statistics</title>
+    <title>AdminLTE 3 | Player Info</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
@@ -140,7 +140,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         </li>
                         <li class="nav-header">PLAYERS</li>
                         <li class="nav-item">
-                            <a href="/playerlist/{{selectedserver.id}}/" class="nav-link active">
+                            <a href="/playerlist/{{selectedserver.id}}/" class="nav-link">
                                 <i class="nav-icon fas fa-users"></i>
                                 <p>
                                     List
@@ -148,7 +148,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="/playerinfo/{{selectedserver.id}}/" class="nav-link active">
                                 <i class="nav-icon fas fa-user-tie"></i>
                                 <p>
                                     Info
@@ -177,12 +177,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             {% if error %}
                             <h1 class="m-0">Error, Please return to home</h1>
                             {% else %}
-                            <h1 class="m-0">Player - List</h1>
+                            <h1 class="m-0">Player - Info</h1>
                             {% endif %}
                         </div><!-- /.col -->
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item active">Player - List</li>
+                                <li class="breadcrumb-item active">Player - Info</li>
                             </ol>
                         </div><!-- /.col -->
                     </div><!-- /.row -->
@@ -219,30 +219,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 </div>
                                 <!-- /.card-header -->
                                 <div class="card-body">
-                                    <table id="playerlisttable" class="table table-bordered table-striped">
-                                        <thead>
-                                            <tr>
-                                                <th>ID</th>
-                                                <th>Name</th>
-                                                <th>Social ID</th>
-                                                <th>IP</th>
-                                                <th>Ping</th>
-                                                <th>Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="playerlistbody">
-                                        </tbody>
-                                        <tfoot>
-                                            <tr>
-                                                <th>ID</th>
-                                                <th>Name</th>
-                                                <th>Social ID</th>
-                                                <th>IP</th>
-                                                <th>Ping</th>
-                                                <th>Action</th>
-                                            </tr>
-                                        </tfoot>
-                                    </table>
+                                
                                 </div>
                                 <!-- /.card-body -->
                             </div>

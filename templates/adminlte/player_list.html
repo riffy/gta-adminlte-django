@@ -148,7 +148,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="/playerinfo/{{selectedserver.id}}/" class="nav-link">
                                 <i class="nav-icon fas fa-user-tie"></i>
                                 <p>
                                     Info
@@ -298,8 +298,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="{% static 'plugins/datatables-buttons/js/buttons.html5.min.js' %}"></script>
     <script src="{% static 'plugins/datatables-buttons/js/buttons.print.min.js' %}"></script>
     <script src="{% static 'plugins/datatables-buttons/js/buttons.colVis.min.js' %}"></script>
-    <!-- Server Statisics -->
+    <!-- Custom -->
     <script src="{% static 'dist/js/pages/player_list.js' %}"></script>
+    <script src="{% static 'dist/js/pages/sidebar.js' %}"></script>
 </body>
 
 </html>

@@ -4,8 +4,6 @@ from django.shortcuts import get_object_or_404, render
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
 
-from ..constants import api_queries
-
 import requests
 import logging
 
@@ -24,9 +22,8 @@ def dashboard(request, serverid=0):
         selectedserver = get_object_or_404(Gameserver, pk=serverid)
         args['selectedserver'] = selectedserver
         try:
-            response = requests.get(selectedserver.api_query(api_queries.DASHBOARD))
+            args['data'] = selectedserver.dashboard_info()
             args['online'] = True
-            args['data'] = response.json()
             return render(request, 'adminlte/dashboard.html', args)
         except requests.RequestException as e:
             logger.error(e)

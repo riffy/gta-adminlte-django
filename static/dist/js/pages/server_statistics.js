@@ -1,12 +1,3 @@
-function serverSelection() {
-    let x = Number(document.getElementById("serverSelect").value);
-    if (x > 0) {
-        window.location.href = "/serverstats/" + x + "/";
-    } else {
-        window.location.href = "/";
-    }
-}
-
 function parseUptime() {
     let uptime = data.uptime
     if (uptime != undefined) {

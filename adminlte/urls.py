@@ -1,6 +1,4 @@
-from django.conf.urls import url
 from django.urls import path
-from django.contrib.auth.views import LoginView
 import adminlte.views as views
 
 urlpatterns = [
@@ -8,5 +6,6 @@ urlpatterns = [
     path('dashboard/<int:serverid>/', views.dashboard, name='dashboard'),
     path('serverstats/<int:serverid>/', views.server_statistics, name='serverstats'),
     path('playerlist/<int:serverid>/', views.player_list, name='playerlist'),
+    path('playerinfo/<int:serverid>/', views.player_info, name='playerinfo'),
     path('playerinfo/<int:serverid>/<int:playerid>/', views.player_info, name='playerinfo')
 ]

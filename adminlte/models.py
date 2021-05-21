@@ -1,5 +1,6 @@
 from django.db import models
-from .constants import api_constants
+from .constants import api_constants, api_queries
+import requests
 # Create your models here.
 
 class Gameserver(models.Model):
@@ -20,3 +21,19 @@ class Gameserver(models.Model):
         for key in params:
             addr += "&{}={}".format(key, params[key])
         return addr
+    
+    def dashboard_info(self):
+        response = requests.get(self.api_query(api_queries.DASHBOARD))
+        return response.json()
+
+    def server_stats(self):
+        response = requests.get(self.api_query(api_queries.SERVER_STATISTICS))
+        return response.json()
+
+    def player_list(self):
+        response = requests.get(self.api_query(api_queries.PLAYER_LIST))
+        return response.json()
+    
+    def player_info(self, playerid):
+        response = requests.get(self.api_query(api_queries.PLAYER_INFO, { "id" : playerid }))
+        return response.json()

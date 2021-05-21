@@ -5,15 +5,13 @@ from django.shortcuts import get_object_or_404, render
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
 
-from ..constants import api_queries
-
 import requests
 import logging
 
 logger = logging.getLogger(__name__)
 
 @login_required(login_url='admin/login/')
-def player_info(request, serverid=0, playerid=0):
+def player_info(request, serverid=0, playerid=None):
     gameservers = Gameserver.objects.all()
     args = {
         'error': False,
@@ -25,9 +23,8 @@ def player_info(request, serverid=0, playerid=0):
         selectedserver = get_object_or_404(Gameserver, pk=serverid)
         args['selectedserver'] = selectedserver
         try:
-            response = requests.get(selectedserver.api_query(api_queries.PLAYER_INFO, { "id" : playerid }))
+            args['data'] = selectedserver.player_info(playerid)
             args['online'] = True
-            args['data'] = response.json()
             return render(request, 'adminlte/player_info.html', args)
         except requests.RequestException as e:
             logger.error(e)
