@@ -11,7 +11,6 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-#@login_required(login_url='admin/login/')
 @login_required()
 def player_info(request, serverid=0, playerid=None):
     gameservers = Gameserver.objects.all()
