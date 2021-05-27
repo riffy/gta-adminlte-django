@@ -1,15 +1,50 @@
 console.log(JSON.stringify(data));
 
-/*
-<div class="progress-bar bg-danger" role="progressbar" aria-valuenow="100" aria-valuemin="0"
-                                        aria-valuemax="100" style="width: 100%">
-                                        <span>{{data.health}} / 200</span>
-                                    </div>
-*/
-
-$(function() {
-
+$(function () {
+    $("#healthBar").append(createHealthBar(data.health));
+    $("#armourBar").append(createProgressBar(data.armour));
+    $("#connectionTime").html(parseUptime(data.connected))
 });
+
+function alertNotImplemented() {
+    alert("Not implemented (yet)");
+}
+
+function parseUptime(time) {
+    if (time) {
+        return new Date(time * 1000).toISOString().substr(11, 8);
+    }
+    return "unknown";
+}
+
+function createHealthBar(health) {
+    const perc = (health <= 100) ? 0 : (health - 100);
+    return createProgressBar(perc);
+}
+
+function createProgressBar(percentage) {
+    const cont = createElement("div", ["progress-bar", "bg-danger"], [
+        {
+            key: "role",
+            value: "progress"
+        },
+        {
+            key: "aria-valuenow",
+            value: percentage
+        },
+        {
+            key: "aria-valuemax",
+            value: "100"
+        },
+        {
+            key: "style",
+            value: `width: ${percentage}%`
+        }]);
+    const lab = createElement("span", ["sr-only"]);
+    lab.innerHTML = `${percentage}/100`
+    cont.appendChild(lab);
+    return cont;
+}
 
 /**
  * createElement
