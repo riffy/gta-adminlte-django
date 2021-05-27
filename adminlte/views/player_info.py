@@ -1,3 +1,4 @@
+from adminlte.views.player_list import player_list
 from django.http.response import Http404
 from adminlte.models import Gameserver
 from django.http import HttpResponse
@@ -10,25 +11,32 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-@login_required(login_url='admin/login/')
+#@login_required(login_url='admin/login/')
+@login_required()
 def player_info(request, serverid=0, playerid=None):
     gameservers = Gameserver.objects.all()
     args = {
         'error': False,
         'gameservers': gameservers,
         'online': False,
-        'data': {}
+        'data': {},
+        'player': False,
     }
     try:
-        selectedserver = get_object_or_404(Gameserver, pk=serverid)
-        args['selectedserver'] = selectedserver
-        try:
-            args['data'] = selectedserver.player_info(playerid)
-            args['online'] = True
-            return render(request, 'adminlte/player_info.html', args)
-        except requests.RequestException as e:
-            logger.error(e)
-            return render(request, 'adminlte/player_info.html', args)
+        if playerid is None:
+            return player_list(request, serverid)
+        else:
+            selectedserver = get_object_or_404(Gameserver, pk=serverid)
+            args['selectedserver'] = selectedserver
+            try:
+                args['data'] = selectedserver.player_info(playerid)
+                args['online'] = True
+                if args['data']:
+                    args['player'] = True
+                return render(request, 'adminlte/player_info.html', args)
+            except requests.RequestException as e:
+                logger.error(e)
+                return render(request, 'adminlte/player_info.html', args)
     except ObjectDoesNotExist as e:
         return render(request, 'adminlte/dashboard.html', {'error': True})
     except Http404 as e:
