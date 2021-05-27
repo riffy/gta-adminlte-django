@@ -170,70 +170,190 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
             <!-- Content Header (Page header) -->
-            <div class="content-header">
+            <section class="content-header">
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            {% if error %}
-                            <h1 class="m-0">Error, Please return to home</h1>
-                            {% else %}
-                            <h1 class="m-0">Player - Info</h1>
-                            {% endif %}
-                        </div><!-- /.col -->
+                            <h1>Player Info</h1>
+                        </div>
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item active">Player - Info</li>
+                                <li class="breadcrumb-item"><a href="/playerlist/{{selectedserver.id}}/">Players</a>
+                                </li>
+                                <li class="breadcrumb-item active">Info</li>
                             </ol>
-                        </div><!-- /.col -->
-                    </div><!-- /.row -->
-                </div><!-- /.container-fluid -->
-            </div>
-            <!-- /.content-header -->
-
-            <!-- Main content -->
-            <section class="content">
-                {% if not error %}
-                <!-- Small boxes (Stat box) -->
-                {% if not online %}
-                <div class="row">
-                    <div class="col-lg-3 col-6">
-                        <div class="small-box bg-danger">
-                            <div class="inner">
-                                <h3>Server Status</h3>
-                                <p>Offline</p>
-                            </div>
-                            <div class="icon">
-                                <i class="ion ion-android-cancel"></i>
-                            </div>
                         </div>
                     </div>
-                    <!-- ./col -->
-                </div>
-                {% else %}
+                </div><!-- /.container-fluid -->
+            </section>
+
+            <!-- Main content If Player data is provided-->
+            {% if player %}
+            <section class="content">
                 <div class="container-fluid">
                     <div class="row">
-                        <div class="col-12">
-                            <div class="card">
+                        <div class="col-md-3">
+
+                            <!-- Profile Image -->
+                            <div class="card card-primary card-outline">
+                                <div class="card-body box-profile">
+                                    <h3 class="profile-username text-center">{{data.name}}</h3>
+
+                                    <p class="text-muted text-center">ID: {{data.id}}</p>
+
+                                    <ul class="list-group list-group-unbordered mb-3">
+                                        <li class="list-group-item">
+                                            <b>Social ID</b> <a class="float-right">{{data.socialId}}</a>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <b>IP</b> <a class="float-right">{{data.ip}}</a>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <b>Ping</b> <a class="float-right">{{data.ping}}</a>
+                                        </li>
+                                    </ul>
+                                    <h3 class="profile-username text-center">Quick Actions</h3>
+                                    <a onclick="alertNotImplemented();" href="#"
+                                        class="btn btn-success btn-block"><b>Heal</b></a>
+                                    <a onclick="alertNotImplemented();" href="#"
+                                        class="btn btn-danger btn-block"><b>Kill</b></a>
+                                    <a onclick="alertNotImplemented();" href="#"
+                                        class="btn btn-secondary btn-block"><b>Grant Armour</b></a>
+                                    <a onclick="alertNotImplemented();" href="#"
+                                        class="btn btn-default btn-block"><b>Remove Armour</b></a>
+                                    <a onclick="alertNotImplemented();" href="#"
+                                        class="btn btn-warning btn-block"><b>Kick</b></a>
+                                </div>
+                                <!-- /.card-body -->
+                            </div>
+                            <!-- /.card -->
+
+                            <!-- Stats Box -->
+                            <div class="card card-primary">
                                 <div class="card-header">
-                                    <h3 class="card-title">Currently online players</h3>
+                                    <h3 class="card-title">Stats</h3>
                                 </div>
                                 <!-- /.card-header -->
                                 <div class="card-body">
-                                
+                                    <strong><i class="fas fa-heartbeat mr-1"></i> Health</strong>
+                                    <div class="progress mb-3" id="healthBar">
+
+                                    </div>
+
+                                    <hr>
+
+                                    <strong><i class="fas fa-shield-alt mr-1"></i> Armour</strong>
+                                    <div class="progress mb-3" id="armourBar">
+
+                                    </div>
+
+                                    <hr>
+
+                                    <strong><i class="fas fa-clock mr-1"></i> Online Time (hh:mm:ss)</strong>
+
+                                    <p id="connectionTime" class="text-muted"></p>
+
                                 </div>
                                 <!-- /.card-body -->
                             </div>
                             <!-- /.card -->
                         </div>
+                        <!-- /.col -->
+                        <div class="col-md-9">
+                            <div class="card">
+                                <div class="card-header p-2">
+                                    <ul class="nav nav-pills">
+                                        <li class="nav-item"><a class="nav-link active" data-toggle="tab">Location</a>
+                                        </li>
+                                    </ul>
+                                </div><!-- /.card-header -->
+                                <div class="card-body">
+                                    <div class="tab-content">
+                                        <div class="active tab-pane" id="location">
+                                            <div class="row">
+                                                <div class="col-lg-3 col-6">
+                                                    <!-- small box -->
+                                                    <div class="small-box bg-info">
+                                                        <div class="inner">
+                                                            <h3>Position</h3>
+                                                            <p>X: {{data.pos.x}}<br>
+                                                            Y: {{data.pos.y}}<br>
+                                                            Z: {{data.pos.z}}</p>
+                                                        </div>
+                                                        <div class="icon">
+                                                            <i class="ion ion-location"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3 col-6">
+                                                    <!-- small box -->
+                                                    <div class="small-box bg-success">
+                                                        <div class="inner">
+                                                            <h3>Rotation</h3>
+                                                            <p>X: {{data.rot.x}}<br>
+                                                            Y: {{data.rot.y}}<br>
+                                                            Z: {{data.rot.z}}</p>
+                                                        </div>
+                                                        <div class="icon">
+                                                            <i class="ion ion-refresh"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3 col-6">
+                                                    <!-- small box -->
+                                                    <div class="small-box bg-warning">
+                                                        <div class="inner">
+                                                            <h3>Dimension</h3>
+                                                            <p>{{data.dimension}}</p>
+                                                        </div>
+                                                        <div class="icon">
+                                                            <i class="ion ion-navigate"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <div class="row">
+                                            <p>To Dos: <br>Add GTA Map with Blip for reference<br>Add Possibility to change positions either by value or dragging/dropping blip</p>
+                                            </div>
+                                        </div>
+                                        <!-- /.tab-pane -->
+                                    </div>
+                                    <!-- /.tab-content -->
+                                </div><!-- /.card-body -->
+                            </div>
+                            <!-- /.card -->
+                        </div>
+                        <!-- /.col -->
                     </div>
-                </div>
-
-                <!-- /.card -->
-                {% endif %}
+                    <!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </section>
+            <!-- /.content -->
+            {% else %}
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <!-- Profile Image -->
+                            <div class="card card-primary card-outline">
+                                <div class="card-body box-profile">
+                                    <h3 class="profile-username text-center">Player not found</h3>
+                                </div>
+                                <!-- /.card-body -->
+                            </div>
+                            <!-- /.card -->
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                    <!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </section>
+            {% endif %}
         </div>
+        <!-- /.content-wrapper -->
         <!-- /.row -->
         {% endif %}
-        </section>
         <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
@@ -252,18 +372,19 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- ./wrapper -->
 
     <!-- REQUIRED SCRIPTS -->
-    <script>
-        var data = {{ data | safe }} || {}; // data provided by Django Model
-    </script>
     <!-- jQuery -->
     <script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
     <!-- Bootstrap 4 -->
     <script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
     <!-- AdminLTE App -->
     <script src="{% static 'dist/js/adminlte.min.js' %}"></script>
+    {% if player %}
+    <script>
+        var data = {{data | safe}} || {}; // data provided by Django Model
+    </script>
     <!-- Server Statisics -->
     <script src="{% static 'dist/js/pages/player_info.js' %}"></script>
+    {% endif %}
 </body>
 
 </html>
-{% endif %}

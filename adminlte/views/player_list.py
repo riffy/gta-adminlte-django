@@ -12,7 +12,7 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-@login_required(login_url='admin/login/')
+@login_required()
 def player_list(request, serverid=0):
     gameservers = Gameserver.objects.all()
     args = {

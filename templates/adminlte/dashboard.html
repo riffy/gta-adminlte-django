@@ -309,11 +309,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
     <!-- AdminLTE App -->
     <script src="{% static 'dist/js/adminlte.min.js' %}"></script>
+    {% if not error %}
     <script>
         var data = {{data | safe}}
     </script>
     <script src="{% static 'dist/js/pages/dashboard.js' %}"></script>
     <script src="{% static 'dist/js/pages/sidebar.js' %}"></script>
+    {% endif %}
 </body>
 
 </html>
